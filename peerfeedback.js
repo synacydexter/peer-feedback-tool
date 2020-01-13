@@ -2,7 +2,7 @@ var data = null;
 
 function initializeDataFromSheety() {
 	var request = new XMLHttpRequest();
-	request.open('GET', 'https://v2-api.sheety.co/d5f0c9b0dacd3d4a8ef4064ae95e1a44/peerFeedbackResult/formResponses', true);
+	request.open('GET', 'https://v2-api.sheety.co/d5f0c9b0dacd3d4a8ef4064ae95e1a44/peerFeedbackResult/formResponses1', true);
 	request.onload = function () {
 		if (request.status >= 200 && request.status < 400) {
 			data = JSON.parse(this.response);
