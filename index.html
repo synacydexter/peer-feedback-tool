@@ -1,0 +1,27 @@
+<html>
+<head>
+<title>Peer Feedback</title>
+<script type="text/javascript" src="peerfeedback.js"></script>
+</head>
+<body>
+Input your name: <input id="name-input" type="text" /> 
+Quarter : 
+<select id="quarter">
+</select>
+<input id="get-result-button" enabled="false" type="button" value="Get Result" onclick="getFeedbackResult(document.getElementById('name-input').value, document.getElementById('quarter').value);" />
+<input id="clear-button" type="button" value="Clear Table" onclick="clearFeedbackTable();" />
+<div id="error_message" style="color:red;"></div>
+<table id="peer_feedback_result" border="1">
+<tr id="from-row"><td style="font-weight:bold; width:200px;">Feedback from</td></tr>
+<tr id="quarter-row"><td style="font-weight:bold; width:200px;">Quarter</td></tr>
+<tr id="going-well-row"><td style="font-weight:bold; width:200px;">What do you think is going well with the person’s work this quarter? Cite some of his/her achievements that have made a positive impression on you.</td></tr>
+<tr id="weak-on-row"><td style="font-weight:bold; width:200px;">What aspects did you notice he/she is weak on? What do you think he/she should stop doing and what can he/she do better?</td></tr>
+<tr id="difficulty-understanding-row"><td style="font-weight:bold; width:200px;">What were situations wherein you had difficulty understanding his/her work or work results and how might he/she improve upon it? Conversely, what good practices did you notice in how he/she made his/her work easy to understand and follow?</td></tr>
+<tr id="constraints-row"><td style="font-weight:bold; width:200px;">What were situations wherein he/she has considered the constraints (e.g. resource conflict or lack of resources, technical dependencies, time constraints), and have adapted his/her work and solutions to fit it? What were these constraints?</td></tr>
+<tr id="learning-row"><td style="font-weight:bold; width:200px;">When he/she had limited knowledge about any area, how did he/she make an effort to learn? </td></tr>
+<tr id="relationships-row"><td style="font-weight:bold; width:200px;"> How is he/she doing in terms of relating to, building good working relationships with, and being useful to the team? In what ways could he/she improve in this aspect?</td></tr>
+<tr id="message-row"><td style="font-weight:bold; width:200px;">Message</td>
+</tr>
+</table>
+</body>
+</html>
