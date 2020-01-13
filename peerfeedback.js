@@ -25,6 +25,7 @@ function enableGetResultButton() {
 }
 
 function getFeedbackResult(name, quarter) {
+	showError("");
 	clearFeedbackTable();
 	if (data != null ) {
 		var resultCount = 0;
@@ -46,6 +47,7 @@ function getFeedbackResult(name, quarter) {
 }
 
 function clearFeedbackTable() {
+	showError("");
 	var tableObj = document.getElementById("peer_feedback_result");
 	for(var rowIter = 0; rowIter < tableObj.rows.length; ) {
 		var rowObj = tableObj.rows[rowIter];
