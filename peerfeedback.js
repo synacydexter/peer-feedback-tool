@@ -1,4 +1,5 @@
 var data = null;
+var revieweeCodeData = null;
 
 function initializeDataFromSheety() {
 	var request = new XMLHttpRequest();
@@ -16,6 +17,21 @@ function initializeDataFromSheety() {
 	request.send();
 }
 
+function initializeRevieweeCodeFromSheety() {
+	var request = new XMLHttpRequest();
+	request.open('GET', 'https://v2-api.sheety.co/d5f0c9b0dacd3d4a8ef4064ae95e1a44/peerFeedbackResult/revieweeCodes', true);
+	request.onload = function () {
+		if (request.status >= 200 && request.status < 400) {
+            console.log(this.response);
+			revieweeCodeData = JSON.parse(this.response);
+		}
+		else {
+			showError("No connection. Please try again later.");
+		}
+	}
+	request.send();
+}
+
 function showError(msg) {
 	document.getElementById("error_message").innerHTML = msg;
 }
@@ -24,7 +40,7 @@ function enableGetResultButton() {
 	document.getElementById("get-result-button").enabled = true;
 }
 
-function getFeedbackResult(name, quarter) {
+function getFeedbackResult(name, quarter, code) {
 	showError("");
 	clearFeedbackTable();
 	if (data != null ) {
@@ -32,17 +48,31 @@ function getFeedbackResult(name, quarter) {
 		var table = document.getElementById("peer_feedback_result");
 		console.log("Peer feedback for " + name);
 		console.log(this.response);
-		
-		for (i = 0; data.formResponses1[i] != null; i++) {
-			if (data.formResponses1[i]["reviewee"] === name && data.formResponses1[i]["quarter"] == quarter) {
-				generateResultColumn(data.formResponses1[i]);
-				resultCount++;
+
+		var codeToCheck = "";
+		revieweeCodeData.revieweeCodes.forEach(function(revieweeCode) {
+			if (revieweeCode["name"] == name) {
+				codeToCheck = revieweeCode["randomCode"];
 			}
-		}			
-		
-		if (resultCount == 0) {
-			showError("No results found.");
+			
+		});
+
+		if (codeToCheck != code) {
+			showError("Invalid code. Please check your email for your unique code.");
+		} 
+		else {
+			for (i = 0; data.formResponses1[i] != null; i++) {
+				if (data.formResponses1[i]["reviewee"] === name && data.formResponses1[i]["quarter"] == quarter) {
+					generateResultColumn(data.formResponses1[i]);
+					resultCount++;
+				}
+			}			
+			
+			if (resultCount == 0) {
+				showError("No results found.");
+			}
 		}
+		
 	}
 }
 
@@ -116,3 +146,4 @@ function generateQuarterSelection() {
 }
 
 initializeDataFromSheety();
+initializeRevieweeCodeFromSheety();

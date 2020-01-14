@@ -8,7 +8,8 @@ Input your name: <input id="name-input" type="text" />
 Quarter : 
 <select id="quarter">
 </select>
-<input id="get-result-button" enabled="false" type="button" value="Get Result" onclick="getFeedbackResult(document.getElementById('name-input').value, document.getElementById('quarter').value);" />
+Unique code : <input id="code" type="text" /> 
+<input id="get-result-button" enabled="false" type="button" value="Get Result" onclick="getFeedbackResult(document.getElementById('name-input').value, document.getElementById('quarter').value, document.getElementById('code').value);" />
 <input id="clear-button" type="button" value="Clear Table" onclick="clearFeedbackTable();" />
 <div id="error_message" style="color:red;"></div>
 <table id="peer_feedback_result" border="1">
