@@ -4,7 +4,7 @@ var revieweeCodeData = null;
 function initializeDataFromSheety() {
 	var request = new XMLHttpRequest();
 	
-	request.open('GET', 'https://v2-api.sheety.co/d5f0c9b0dacd3d4a8ef4064ae95e1a44/peerFeedbackResult/formResponses1', true);
+	request.open('GET', 'https://v2-api.sheety.co/d5f0c9b0dacd3d4a8ef4064ae95e1a44/peerFeedbackV1/formResponses1', true);
 	request.onload = function () {
 		if (request.status >= 200 && request.status < 400) {
 			data = JSON.parse(this.response);
@@ -21,7 +21,7 @@ function initializeDataFromSheety() {
 
 function initializeRevieweeCodeFromSheety() {
 	var request = new XMLHttpRequest();
-	request.open('GET', 'https://v2-api.sheety.co/d5f0c9b0dacd3d4a8ef4064ae95e1a44/peerFeedbackResult/revieweeCodes', true);
+	request.open('GET', 'https://v2-api.sheety.co/d5f0c9b0dacd3d4a8ef4064ae95e1a44/peerFeedbackV1/revieweeCodes', true);
 	request.onload = function () {
 		if (request.status >= 200 && request.status < 400) {
             revieweeCodeData = JSON.parse(this.response);
