@@ -4,7 +4,7 @@ var revieweeCodeData = null;
 function initializeDataFromSheety() {
 	var request = new XMLHttpRequest();
 	
-	request.open('GET', 'https://v2-api.sheety.co/d5f0c9b0dacd3d4a8ef4064ae95e1a44/peerFeedbackV1/formResponses1', true);
+	request.open('GET', 'https://v2-api.sheety.co/d5f0c9b0dacd3d4a8ef4064ae95e1a44/peerFeedbackV2/formResponses1', true);
 	request.onload = function () {
 		if (request.status >= 200 && request.status < 400) {
 			data = JSON.parse(this.response);
@@ -21,7 +21,7 @@ function initializeDataFromSheety() {
 
 function initializeRevieweeCodeFromSheety() {
 	var request = new XMLHttpRequest();
-	request.open('GET', 'https://v2-api.sheety.co/d5f0c9b0dacd3d4a8ef4064ae95e1a44/peerFeedbackV1/revieweeCodes', true);
+	request.open('GET', 'https://v2-api.sheety.co/d5f0c9b0dacd3d4a8ef4064ae95e1a44/peerFeedbackV2/emailCodes', true);
 	request.onload = function () {
 		if (request.status >= 200 && request.status < 400) {
             revieweeCodeData = JSON.parse(this.response);
@@ -52,7 +52,7 @@ function getFeedbackResult(name, quarter, code) {
 		console.log(this.response);
 
 		var codeToCheck = "";
-		revieweeCodeData.revieweeCodes.forEach(function(revieweeCode) {
+		revieweeCodeData.emailCodes.forEach(function(revieweeCode) {
 			if (revieweeCode["name"] == name) {
 				codeToCheck = revieweeCode["randomCode"];
 			}
@@ -64,7 +64,7 @@ function getFeedbackResult(name, quarter, code) {
 		} 
 		else {
 			for (i = 0; data.formResponses1[i] != null; i++) {
-				if (data.formResponses1[i]["reviewee"] === name && data.formResponses1[i]["quarter"] == quarter) {
+				if (data.formResponses1[i]["youAreGivingFeedbackTo:"] === name && data.formResponses1[i]["quarter:"] == quarter) {
 					generateResultColumn(data.formResponses1[i]);
 					resultCount++;
 				}
@@ -91,25 +91,41 @@ function clearFeedbackTable() {
 }
 
 function generateResultColumn(dataObj) {
-	var fromRow = document.getElementById('from-row');
-	var quarterRow = document.getElementById('quarter-row');
-	var goingWellRow = document.getElementById('going-well-row');
-	var weakOnRow = document.getElementById('weak-on-row');
-	var difficultyUnderstandingRow = document.getElementById('difficulty-understanding-row');
-	var constraintsRow = document.getElementById('constraints-row');
-	var learningRow =document.getElementById('learning-row');
-	var relationshipsRow = document.getElementById('relationships-row');
-	var messageRow = document.getElementById('message-row');
+	const NO_OF_FIELDS_TO_SKIP = 3, START_ROW = 2;
 	
-	appendToRow(fromRow, dataObj["emailAddress"]);
-	appendToRow(quarterRow, dataObj["quarter"]);
-	appendToRow(goingWellRow, dataObj["whatDoYouThinkIsGoingWellWithThePerson’sWorkThisQuarter?CiteSomeOfHis/herAchievementsThatHaveMadeAPositiveImpressionOnYou"]);
-	appendToRow(weakOnRow, dataObj["whatAspectsDidYouNoticeHe/sheIsWeakOn?WhatDoYouThinkHe/sheShouldStopDoingAndWhatCanHe/sheDoBetter?"]);
-	appendToRow(difficultyUnderstandingRow, dataObj["whatWereSituationsWhereinYouHadDifficultyUnderstandingHis/herWorkOrWorkResultsAndHowMightHe/sheImproveUponIt?Conversely,WhatGoodPracticesDidYouNoticeInHowHe/sheMadeHis/herWorkEasyToUnderstandAndFollow?"]);
-	appendToRow(constraintsRow, dataObj["whatWereSituationsWhereinHe/sheHasConsideredTheConstraints (eGResourceConflictOrLackOfResources,TechnicalDependencies,TimeConstraints),AndHaveAdaptedHis/herWorkAndSolutionsToFitIt?WhatWereTheseConstraints?"]);
-	appendToRow(learningRow, dataObj["whenHe/sheHadLimitedKnowledgeAboutAnyArea,HowDidHe/sheMakeAnEffortToLearn?"]);
-	appendToRow(relationshipsRow, dataObj["howIsHe/sheDoingInTermsOfRelatingTo,BuildingGoodWorkingRelationshipsWith,AndBeingUsefulToTheTeam?InWhatWaysCouldHe/sheImproveInThisAspect?"]);
-	appendToRow(messageRow, dataObj["message"]);
+	// Set "feedback from"
+	appendToRow( document.getElementById('row1'), dataObj["emailAddress"]);
+
+	// Set other rows
+	var fields = 0;
+	var rowName;
+	var row = START_ROW;
+	for (var key in dataObj) {
+		if (fields > NO_OF_FIELDS_TO_SKIP && dataObj.hasOwnProperty(key)) {
+			rowName = "row" + (row++);
+			appendToRow( document.getElementById(rowName), dataObj[key] );
+		}
+		fields++;
+	}
+	// var fromRow = document.getElementById('from-row');
+	// var quarterRow = document.getElementById('quarter-row');
+	// var goingWellRow = document.getElementById('going-well-row');
+	// var weakOnRow = document.getElementById('weak-on-row');
+	// var difficultyUnderstandingRow = document.getElementById('difficulty-understanding-row');
+	// var constraintsRow = document.getElementById('constraints-row');
+	// var learningRow =document.getElementById('learning-row');
+	// var relationshipsRow = document.getElementById('relationships-row');
+	// var messageRow = document.getElementById('message-row');
+	
+	// appendToRow(fromRow, dataObj["emailAddress"]);
+	// appendToRow(quarterRow, dataObj["quarter"]);
+	// appendToRow(goingWellRow, dataObj["whatDoYouThinkIsGoingWellWithThePerson’sWorkThisQuarter?CiteSomeOfHis/herAchievementsThatHaveMadeAPositiveImpressionOnYou"]);
+	// appendToRow(weakOnRow, dataObj["whatAspectsDidYouNoticeHe/sheIsWeakOn?WhatDoYouThinkHe/sheShouldStopDoingAndWhatCanHe/sheDoBetter?"]);
+	// appendToRow(difficultyUnderstandingRow, dataObj["whatWereSituationsWhereinYouHadDifficultyUnderstandingHis/herWorkOrWorkResultsAndHowMightHe/sheImproveUponIt?Conversely,WhatGoodPracticesDidYouNoticeInHowHe/sheMadeHis/herWorkEasyToUnderstandAndFollow?"]);
+	// appendToRow(constraintsRow, dataObj["whatWereSituationsWhereinHe/sheHasConsideredTheConstraints (eGResourceConflictOrLackOfResources,TechnicalDependencies,TimeConstraints),AndHaveAdaptedHis/herWorkAndSolutionsToFitIt?WhatWereTheseConstraints?"]);
+	// appendToRow(learningRow, dataObj["whenHe/sheHadLimitedKnowledgeAboutAnyArea,HowDidHe/sheMakeAnEffortToLearn?"]);
+	// appendToRow(relationshipsRow, dataObj["howIsHe/sheDoingInTermsOfRelatingTo,BuildingGoodWorkingRelationshipsWith,AndBeingUsefulToTheTeam?InWhatWaysCouldHe/sheImproveInThisAspect?"]);
+	// appendToRow(messageRow, dataObj["message"]);
 }
 
 function appendToRow(rowObj, textToAppend) {
@@ -130,7 +146,7 @@ function generateQuarterSelection() {
 	if (data != null) {
 		data.formResponses1.forEach(function(responseObj) {
 			var alreadyExists = false;
-			var currentResponseQuarter = responseObj["quarter"];
+			var currentResponseQuarter = responseObj["quarter:"];
 			quarterSelectionArr.forEach( function(quarter) {
 				if (quarter == currentResponseQuarter) {
 					alreadyExists = true;
