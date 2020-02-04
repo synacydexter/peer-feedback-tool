@@ -107,25 +107,6 @@ function generateResultColumn(dataObj) {
 		}
 		fields++;
 	}
-	// var fromRow = document.getElementById('from-row');
-	// var quarterRow = document.getElementById('quarter-row');
-	// var goingWellRow = document.getElementById('going-well-row');
-	// var weakOnRow = document.getElementById('weak-on-row');
-	// var difficultyUnderstandingRow = document.getElementById('difficulty-understanding-row');
-	// var constraintsRow = document.getElementById('constraints-row');
-	// var learningRow =document.getElementById('learning-row');
-	// var relationshipsRow = document.getElementById('relationships-row');
-	// var messageRow = document.getElementById('message-row');
-	
-	// appendToRow(fromRow, dataObj["emailAddress"]);
-	// appendToRow(quarterRow, dataObj["quarter"]);
-	// appendToRow(goingWellRow, dataObj["whatDoYouThinkIsGoingWellWithThePerson’sWorkThisQuarter?CiteSomeOfHis/herAchievementsThatHaveMadeAPositiveImpressionOnYou"]);
-	// appendToRow(weakOnRow, dataObj["whatAspectsDidYouNoticeHe/sheIsWeakOn?WhatDoYouThinkHe/sheShouldStopDoingAndWhatCanHe/sheDoBetter?"]);
-	// appendToRow(difficultyUnderstandingRow, dataObj["whatWereSituationsWhereinYouHadDifficultyUnderstandingHis/herWorkOrWorkResultsAndHowMightHe/sheImproveUponIt?Conversely,WhatGoodPracticesDidYouNoticeInHowHe/sheMadeHis/herWorkEasyToUnderstandAndFollow?"]);
-	// appendToRow(constraintsRow, dataObj["whatWereSituationsWhereinHe/sheHasConsideredTheConstraints (eGResourceConflictOrLackOfResources,TechnicalDependencies,TimeConstraints),AndHaveAdaptedHis/herWorkAndSolutionsToFitIt?WhatWereTheseConstraints?"]);
-	// appendToRow(learningRow, dataObj["whenHe/sheHadLimitedKnowledgeAboutAnyArea,HowDidHe/sheMakeAnEffortToLearn?"]);
-	// appendToRow(relationshipsRow, dataObj["howIsHe/sheDoingInTermsOfRelatingTo,BuildingGoodWorkingRelationshipsWith,AndBeingUsefulToTheTeam?InWhatWaysCouldHe/sheImproveInThisAspect?"]);
-	// appendToRow(messageRow, dataObj["message"]);
 }
 
 function appendToRow(rowObj, textToAppend) {
